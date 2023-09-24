@@ -27,7 +27,7 @@ public class DetailActivity extends AppCompatActivity {
         arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DetailActivity.this,MainActivity.class);
+                Intent intent = new Intent(DetailActivity.this,MovieActivity.class);
                 startActivity(intent);
             }
         });

@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("username",username);
                 //to save our data with key and value
                 editor.apply();
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this,MovieActivity.class);
                 startActivity(intent);
             }
             else{
