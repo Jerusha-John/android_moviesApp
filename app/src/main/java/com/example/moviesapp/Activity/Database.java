@@ -19,11 +19,14 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String qry1 = "create table users(username text,email text,password text)";
         sqLiteDatabase.execSQL(qry1);
+        sqLiteDatabase.execSQL("CREATE TABLE MOVIES(ID INTEGER PRIMARY KEY AUTOINCREMENT, MOVIE_NAME TEXT, MOVIE_DESC TEXT, MOVIE_RATING TEXT, MOVIE_DUR TEXT )");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS USERS");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS DOCTOR");
+        onCreate(sqLiteDatabase);
     }
 
     public void register(String username,String email,String password){
@@ -48,5 +51,42 @@ public class Database extends SQLiteOpenHelper {
         }
         return result;
     }
+
+    public void addMovie(String moviename,String desc,String rating, String dur){
+        ContentValues cv = new ContentValues();
+        cv.put("movname",moviename);
+        cv.put("movdesc",desc);
+        cv.put("movrating",rating);
+        cv.put("movdur",dur);
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert("MOVIES",null,cv);
+        db.close();
+    }
+
+    public Movies[] getMoviesDet(){
+        Movies mov[] = new Movies[15];
+        try{
+            SQLiteDatabase db = this.getReadableDatabase();
+            String[] columns={"ID","MOVIE_NAME","MOVIE_DESC","MOVIE_RATING","MOVIE_DUR"};
+            String selection="";
+            String[] selectionArgs = {};
+            Cursor cursor = db.query("MOVIES",columns,selection,selectionArgs,null,null,null);
+            System.out.println(cursor);
+            int count = cursor.getCount();
+            if(cursor!=null && cursor.getCount() !=0){
+                int i = 0;
+                while(cursor.moveToNext() && i < count){
+                    mov[i] = new Movies();
+                    //Need to fill
+                }
+            }
+
+
+        }catch(Exception e){
+
+        }
+        return mov;
+    }
+
 
 }
